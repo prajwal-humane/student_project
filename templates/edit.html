@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/index">PRAJWAL IT SOLUTION PVT LTD</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Courses</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">AI</a>
+                    <a class="dropdown-item" href="#">Java FullStack</a>
+                    <a class="dropdown-item" href="#">Python FullStack</a>
+                    <a class="dropdown-item" href="#">Data Science</a>
+                    <a class="dropdown-item" href="#">Data Analytics</a>
+                    <a class="dropdown-item" href="#">DevOps AWS</a>
+                    <a class="dropdown-item" href="#">Azur DevOps</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Edit Student</h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ url_for('updateData') }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="rollNo" value="{{ student[0] }}">
+                <div class="form-group">
+                    <label>Roll No</label>
+                    <input type="text" name="rollNo" class="form-control" value="{{ student[0] }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ student[1] }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select name="subject" class="form-control" required>
+                        {% for i in sub %}
+                        <option value="{{i[1]}}" {% if i[1] == student[2] %}selected{% endif %}>{{i[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ student[3] }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" value="Male" {% if student[4] == 'Male' %}checked{% endif %}>
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" value="Female" {% if student[4] == 'Female' %}checked{% endif %}>
+                        <label class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" value="other" {% if student[4] == 'other' %}checked{% endif %}>
+                        <label class="form-check-label">Other</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Batch Time</label><br>
+                    {% set selected_batches = student[5].split(',') if student[5] else [] %}
+                    {% for btime in times %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="batch_time" value="{{ btime[1] }}"
+                               {% if btime[1] in selected_batches %}checked{% endif %}>
+                        <label class="form-check-label">{{ btime[1] }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <label>Current Photo</label><br>
+                    {% if student[6] %}
+                        <img src="{{ url_for('static', filename='uploads/' + student[6]) }}" alt="Student Photo" width="100"><br>
+                    {% else %}
+                        <span>No photo uploaded</span><br>
+                    {% endif %}
+                    <label>Change Photo</label>
+                    <input type="file" name="photo" class="form-control-file">
+                </div>
+                <button type="submit" class="btn btn-success">Update</button>
+                <a href="{{ url_for('showStudentDetails') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

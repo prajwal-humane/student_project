@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Student Profile</title>
+    <meta name="description" content="Student profile page">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        .profile {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        .profile img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .profile h2 {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <h2>Student Profile</h2>
+        <hr>
+        <img src="{{ url_for('static', filename='uploads/' + student[6]) }}" alt="profile">
+<p><strong>Student Roll Number: {{ student[0] }}</strong></p>
+<p><strong>Student Name: {{ student[1] }}</strong></p>
+<p><strong>Student Subject: {{ student[2] }}</strong></p>
+<p><strong>Student Email: {{ student[3] }}</strong></p>
+<p><strong>Student Gender: {{ student[4] }}</strong></p>
+<p><strong>Student Batch Time: {{ student[5] }}</strong></p>
+
+    </div>
+</body>
+</html>
